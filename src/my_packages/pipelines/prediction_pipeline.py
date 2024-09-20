@@ -33,6 +33,4 @@ class HeartGradient:
         
         plt.show()
 
-# Example usage
 heart_gradient = HeartGradient()
-heart_gradient.create_heart_gradient()
