@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 import numpy as np
 import matplotlib.pyplot as plt
 import io
 import base64
+import mlflow
+
 
 app = Flask(__name__)
 
@@ -39,6 +41,15 @@ def login():
 
 @app.route('/login', methods=['POST'])
 def show_heart():
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    # Start MLflow run to log username and password
+    with mlflow.start_run():
+        mlflow.log_param("username", username)
+        mlflow.log_param("password", password)
+
     heart_gradient = HeartGradient()
     heart_image = heart_gradient.create_heart_gradient()
     return render_template('result.html', heart_image=heart_image)
